@@ -37,7 +37,7 @@ var featureCollection = {
 
 function cleanup (t, store) {
   store.close(function () {
-    leveldown.destroy(store.name, function (err) {
+    leveldown.destroy(store.location, function (err) {
       t.error(err, 'no error cleaning up');
       t.end();
     });

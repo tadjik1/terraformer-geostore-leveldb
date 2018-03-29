@@ -1,10 +1,11 @@
 var levelup = require('levelup');
 var leveldown = require('leveldown');
+var encode = require('encoding-down');
 module.exports = LevelStore;
 function LevelStore (options, cb) {
   if (typeof options === 'string') {
     options = {
-      name: options
+      location: options
     };
   }
   if (typeof options === 'function') {
@@ -13,19 +14,19 @@ function LevelStore (options, cb) {
   }
 
   options = options || {};
-  this.options = options;
-  this.name    = options.name || 'LevelStore';
+
+  this.location = options.location || './db';
+
   if (options.defaultCallback) {
     this.defaultCallback = options.defaultCallback;
   }
   cb = cb || this.defaultCallback;
-  var levelOpts ={};
-  Object.keys(options).forEach(function(key) {
-    levelOpts[key] = options[key];
-  });
-  levelOpts.db = levelOpts.db || leveldown;
-  levelOpts.valueEncoding = 'json';
-  this.db = levelup(this.name, levelOpts, cb);
+
+  this.db = levelup(encode(leveldown(this.location), {
+    keyEncoding: 'json',
+    valueEncoding: 'json'
+  }), cb);
+
   this.close = this.db.close.bind(this.db);
 }
 
@@ -45,10 +46,12 @@ LevelStore.prototype.add = function (geojson, callback) {
 };
 
 LevelStore.prototype.get = function (id, callback) {
+  callback = callback || this.defaultCallback;
   this.db.get(id, callback);
 };
 
 LevelStore.prototype.update = function (geojson, callback) {
+  callback = callback || this.defaultCallback;
   this.add(geojson, callback);
 };
 
