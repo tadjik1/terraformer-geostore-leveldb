@@ -17,28 +17,7 @@
   },
   "dependencies": {
     "encoding-down": "^4.0.0",
-    "level-js": "^2.2.4",
     "leveldown": "^3.0.0",
-    "levelup": "^2.0.2",
-    "testling": "^1.7.1"
-  },
-  "testling": {
-    "files": "test/*.js",
-    "browsers": [
-      "ie/8..latest",
-      "firefox/17..latest",
-      "firefox/nightly",
-      "chrome/22..latest",
-      "chrome/canary",
-      "opera/12..latest",
-      "opera/next",
-      "safari/5.1..latest",
-      "ipad/6.0..latest",
-      "iphone/6.0..latest",
-      "android-browser/4.2..latest"
-    ]
-  },
-  "browser": {
-    "leveldown": "level-js"
+    "levelup": "^2.0.2"
   }
 }
